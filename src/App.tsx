@@ -194,7 +194,7 @@ export default function App() {
       />
 
       {/* Main Container below fixed header */}
-      <main className="w-full pt-[8.5rem] bg-[#f9f9ff] flex-1 flex flex-col">
+      <main className="w-full pt-[9.5rem] sm:pt-[8.5rem] bg-[#f9f9ff] flex-1 flex flex-col">
         {/* Series Quick Filter Navigation Rail */}
         <SeriesFilterRail
           selectedSeries={selectedSeries}
