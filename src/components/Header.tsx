@@ -13,6 +13,9 @@ interface HeaderProps {
   onSortChange: (sort: SortOption) => void;
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
+  onRefresh?: () => void;
+  isRefreshing?: boolean;
+  lastSyncTime?: Date | null;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -26,6 +29,9 @@ export const Header: React.FC<HeaderProps> = ({
   onSortChange,
   viewMode,
   onViewModeChange,
+  onRefresh,
+  isRefreshing = false,
+  lastSyncTime = null,
 }) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-[#dce2f7]">
@@ -129,9 +135,30 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* View Mode Switcher */}
-        <nav className="flex items-center p-1 bg-[#e9edff] rounded-lg text-[12px] font-semibold shrink-0">
-          <button
+        {/* View Mode Switcher and Sync Button */}
+        <div className="flex items-center gap-2 shrink-0">
+          {onRefresh && (
+            <button
+              onClick={onRefresh}
+              disabled={isRefreshing}
+              title={
+                lastSyncTime
+                  ? `Terakhir sinkron: ${lastSyncTime.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}\nKlik untuk memperbarui dari Google Spreadsheet`
+                  : 'Sinkronkan data dari Google Spreadsheet'
+              }
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-[#dec1af] bg-white text-[12px] font-semibold text-[#574235] hover:text-[#964900] hover:border-[#f57c00] transition-all cursor-pointer shadow-2xs disabled:opacity-60"
+            >
+              <span className={`material-symbols-outlined text-[17px] text-[#964900] ${isRefreshing ? 'animate-spin' : ''}`}>
+                sync
+              </span>
+              <span className="hidden md:inline">
+                {isRefreshing ? 'Menyinkron...' : 'Sinkron'}
+              </span>
+            </button>
+          )}
+
+          <nav className="flex items-center p-1 bg-[#e9edff] rounded-lg text-[12px] font-semibold shrink-0">
+            <button
             onClick={() => onViewModeChange('galeri-grid-4-kolom')}
             className={`px-2.5 sm:px-3 py-1.5 rounded transition-all cursor-pointer flex items-center gap-1 ${
               viewMode === 'galeri-grid-4-kolom'
@@ -169,6 +196,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </nav>
       </div>
-    </header>
+    </div>
+  </header>
   );
 };

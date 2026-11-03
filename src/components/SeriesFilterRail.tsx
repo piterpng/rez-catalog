@@ -1,11 +1,11 @@
 import React from 'react';
-import { SERIES_LIST } from '../data/initialCatalog';
 
 interface SeriesFilterRailProps {
   selectedSeries: string;
   onSelectSeries: (series: string) => void;
   seriesCounts: Record<string, number>;
   totalCount: number;
+  seriesList?: string[];
 }
 
 export const SeriesFilterRail: React.FC<SeriesFilterRailProps> = ({
@@ -13,6 +13,7 @@ export const SeriesFilterRail: React.FC<SeriesFilterRailProps> = ({
   onSelectSeries,
   seriesCounts,
   totalCount,
+  seriesList = ['Semua Series'],
 }) => {
   return (
     <section className="w-full bg-white px-4 sm:px-6 py-2 border-b border-[#e9edff] shadow-2xs">
@@ -22,7 +23,7 @@ export const SeriesFilterRail: React.FC<SeriesFilterRailProps> = ({
           Seri:
         </span>
 
-        {SERIES_LIST.map((series) => {
+        {seriesList.map((series) => {
           const isAll = series === 'Semua Series';
           const isSelected = selectedSeries === series || (isAll && (!selectedSeries || selectedSeries === 'Semua Series'));
           const count = isAll ? totalCount : seriesCounts[series] ?? 0;

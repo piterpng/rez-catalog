@@ -1,6 +1,7 @@
 import React from 'react';
 import { InvitationItem } from '../types/invitation';
 import { SEGMENTS } from '../data/initialCatalog';
+import { handleImageError } from '../utils/imageFallback';
 
 interface CardGrid4Props {
   items: InvitationItem[];
@@ -50,6 +51,7 @@ export const CardGrid4: React.FC<CardGrid4Props> = ({
                 src={item.image}
                 alt={item.series}
                 loading="lazy"
+                onError={handleImageError}
                 className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500 shadow-sm"
               />
 

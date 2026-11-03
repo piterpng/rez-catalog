@@ -1,5 +1,4 @@
 import React from 'react';
-import { SegmentTier } from '../types/invitation';
 
 export interface FilterState {
   segment: string;
@@ -20,6 +19,8 @@ interface ParameterFiltersProps {
   startIndex: number;
   endIndex: number;
   sortLabel: string;
+  availableColors?: string[];
+  availableFoldings?: string[];
 }
 
 export const ParameterFilters: React.FC<ParameterFiltersProps> = ({
@@ -32,6 +33,20 @@ export const ParameterFilters: React.FC<ParameterFiltersProps> = ({
   startIndex,
   endIndex,
   sortLabel,
+  availableColors = [
+    'Cokelat',
+    'Biru',
+    'Pink',
+    'Hitam',
+    'Krem',
+    'Hijau',
+    'Kuning / Emas',
+    'Putih',
+    'Ungu',
+    'Abu-abu',
+    'Merah',
+  ],
+  availableFoldings = ['Lipat 2', 'Lipat 3', 'Single Card'],
 }) => {
   return (
     <section className="w-full px-4 sm:px-6 py-3 bg-[#f1f3ff] border-b border-[#dce2f7]">
@@ -66,36 +81,31 @@ export const ParameterFilters: React.FC<ParameterFiltersProps> = ({
               className="w-full h-9 pl-3 pr-8 rounded-lg bg-white text-[#141b2b] text-[11px] font-semibold shadow-xs border border-[#dec1af]/60 focus:outline-none focus:ring-2 focus:ring-[#f57c00]/20 appearance-none cursor-pointer"
             >
               <option value="">Warna Dominan</option>
-              <option value="Ivory White">Putih Klasik / Ivory</option>
-              <option value="Sage Green">Sage Green</option>
-              <option value="Navy Midnight">Navy Midnight</option>
-              <option value="Maroon Velvet">Maroon Velvet</option>
-              <option value="Blush Pink">Blush Pink</option>
-              <option value="Emerald Dark">Emerald Dark</option>
-              <option value="Terracotta">Terracotta</option>
-              <option value="Amethyst Lilac">Amethyst Lilac</option>
-              <option value="Cokelat Soga">Cokelat Soga Jawa</option>
-              <option value="Crystal Clear">Crystal Clear Akrilik</option>
+              {availableColors.map((color) => (
+                <option key={`p-${color}`} value={color}>
+                  {color}
+                </option>
+              ))}
             </select>
             <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[#8b7263] text-[18px] pointer-events-none">
               expand_more
             </span>
           </div>
 
-          {/* Warna Sekunder / Foil Filter */}
+          {/* Warna Sekunder / Aksen Filter */}
           <div className="relative min-w-[130px] flex-1 sm:flex-none">
             <select
               value={filters.secondaryColor}
               onChange={(e) => onFilterChange('secondaryColor', e.target.value)}
-              aria-label="Filter Berdasarkan Warna Aksen Foil"
+              aria-label="Filter Berdasarkan Warna Sekunder"
               className="w-full h-9 pl-3 pr-8 rounded-lg bg-white text-[#141b2b] text-[11px] font-semibold shadow-xs border border-[#dec1af]/60 focus:outline-none focus:ring-2 focus:ring-[#f57c00]/20 appearance-none cursor-pointer"
             >
-              <option value="">Warna Aksen / Foil</option>
-              <option value="Gold Foil">Gold Foil Emboss</option>
-              <option value="Silver Foil">Silver Chrome</option>
-              <option value="Rose Gold">Rose Gold Shimmer</option>
-              <option value="Pure White">Pure White Ink</option>
-              <option value="Charcoal">Charcoal / Graphite</option>
+              <option value="">Warna Sekunder</option>
+              {availableColors.map((color) => (
+                <option key={`s-${color}`} value={color}>
+                  {color}
+                </option>
+              ))}
             </select>
             <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[#8b7263] text-[18px] pointer-events-none">
               expand_more
@@ -103,7 +113,7 @@ export const ParameterFilters: React.FC<ParameterFiltersProps> = ({
           </div>
 
           {/* Jenis Lipatan Filter */}
-          <div className="relative min-w-[140px] flex-1 sm:flex-none">
+          <div className="relative min-w-[130px] flex-1 sm:flex-none">
             <select
               value={filters.foldingType}
               onChange={(e) => onFilterChange('foldingType', e.target.value)}
@@ -111,17 +121,11 @@ export const ParameterFilters: React.FC<ParameterFiltersProps> = ({
               className="w-full h-9 pl-3 pr-8 rounded-lg bg-white text-[#141b2b] text-[11px] font-semibold shadow-xs border border-[#dec1af]/60 focus:outline-none focus:ring-2 focus:ring-[#f57c00]/20 appearance-none cursor-pointer"
             >
               <option value="">Jenis Lipatan</option>
-              <option value="Lipat 2 Vertikal">Lipat 2 Vertikal</option>
-              <option value="Lipat 2 Horizontal">Lipat 2 Horizontal</option>
-              <option value="Lipat 2 Standar">Lipat 2 Standar</option>
-              <option value="Lipat 3 Gatefold">Lipat 3 Gatefold</option>
-              <option value="Lipat 3 Z-Fold">Lipat 3 Z-Fold</option>
-              <option value="Lipat 3 Standar">Lipat 3 Standar</option>
-              <option value="Single Hardcover">Single Hardcover</option>
-              <option value="Hardcover Lipat 2">Hardcover Lipat 2</option>
-              <option value="Single Sheet">Single Sheet</option>
-              <option value="Single Card">Single Card</option>
-              <option value="Die-Cut Arch">Die-Cut Arch</option>
+              {availableFoldings.map((fold) => (
+                <option key={fold} value={fold}>
+                  {fold}
+                </option>
+              ))}
             </select>
             <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-[#8b7263] text-[18px] pointer-events-none">
               expand_more

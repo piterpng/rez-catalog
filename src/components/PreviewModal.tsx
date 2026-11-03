@@ -1,6 +1,7 @@
 import React from 'react';
 import { InvitationItem } from '../types/invitation';
 import { SEGMENTS } from '../data/initialCatalog';
+import { handleImageError } from '../utils/imageFallback';
 
 interface PreviewModalProps {
   item: InvitationItem | null;
@@ -70,6 +71,7 @@ export const PreviewModal: React.FC<PreviewModalProps> = ({
               <img
                 src={item.image}
                 alt={item.series}
+                onError={handleImageError}
                 className="w-full h-full object-cover"
               />
             </div>
